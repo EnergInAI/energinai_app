@@ -1,8 +1,7 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { EnergyDataState, TimeSeriesDataPoint } from '../../types/types';
 import DetailedMetricsPanel from './DetailedMetricsPanel';
-import DeviceBreakdown from './DeviceBreakdown';
 import EnergyUsageChart from './EnergyUsageChart';
 import GreetingCard from './GreetingCard';
 
@@ -20,23 +19,15 @@ const mockChartData: TimeSeriesDataPoint[] = [
   { time: '17:00', loadKwh: 3.1, genKwh: 1.9 },
 ];
 
-const DashboardHeader = () => (
-  <View style={styles.content}>
-    <GreetingCard />
-    <DetailedMetricsPanel loadMetrics={mockEnergyData.load} genMetrics={mockEnergyData.generation} />
-    <EnergyUsageChart data={mockChartData} />
-  </View>
-);
-
 const Dashboard = () => {
   return (
-    <FlatList
-      style={styles.container}
-      ListHeaderComponent={DashboardHeader}
-      data={[{ key: 'device-breakdown' }]}
-      renderItem={() => <DeviceBreakdown />}
-      keyExtractor={(item) => item.key}
-    />
+    <ScrollView style={styles.container}>
+      <View style={styles.content}>
+        <GreetingCard />
+        <DetailedMetricsPanel loadMetrics={mockEnergyData.load} genMetrics={mockEnergyData.generation} />
+        <EnergyUsageChart data={mockChartData} />
+      </View>
+    </ScrollView>
   );
 };
 

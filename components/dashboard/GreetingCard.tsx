@@ -19,10 +19,6 @@ const GreetingCard = () => {
           <MaterialCommunityIcons name="calendar-blank" size={20} color="#94A3B8" />
           <Text style={styles.date}>{formattedDate}</Text>
         </View>
-        <View style={styles.eventsContainer}>
-          <MaterialCommunityIcons name="bell-outline" size={20} color="#94A3B8" />
-          <Text style={styles.events}>2 Events</Text>
-        </View>
       </View>
       <Text style={styles.greeting}>Hello, Alex</Text>
       <Text style={styles.subGreeting}>Here's your energy overview for today</Text>
