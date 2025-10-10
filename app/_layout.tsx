@@ -1,9 +1,13 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { Amplify } from 'aws-amplify';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import awsConfig from '../src/aws-exports';
+
+Amplify.configure(awsConfig);
 
 export const unstable_settings = {
   anchor: '(tabs)',
