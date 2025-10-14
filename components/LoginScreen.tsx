@@ -7,7 +7,7 @@ const LoginScreen = () => {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.push('/dashboard');
+    router.push('/home');
   };
 
   return (

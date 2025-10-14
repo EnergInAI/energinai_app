@@ -1,5 +1,4 @@
-import Dashboard from '@/components/dashboard/Dashboard';
-import React from 'react';
+import Dashboard from '../../components/dashboard/Dashboard';
 
 const DashboardScreen = () => {
   return <Dashboard />;
