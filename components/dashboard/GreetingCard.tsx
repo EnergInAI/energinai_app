@@ -20,8 +20,7 @@ const GreetingCard = () => {
           <Text style={styles.date}>{formattedDate}</Text>
         </View>
       </View>
-      <Text style={styles.greeting}>Hello, Alex</Text>
-      <Text style={styles.subGreeting}>Here's your energy overview for today</Text>
+   
       <View style={styles.kpiContainer}>
         <PrimaryKPIs />
       </View>

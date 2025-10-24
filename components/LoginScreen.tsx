@@ -1,5 +1,5 @@
 import { ThemedView } from '@/components/themed-view';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import React from 'react';
 import { Image, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -37,6 +37,11 @@ const LoginScreen = () => {
         <TouchableOpacity style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
+        <Link href="/signup" asChild>
+          <TouchableOpacity>
+             <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
+          </TouchableOpacity>
+        </Link>
       </View>
     </ThemedView>
   );
@@ -94,6 +99,12 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  linkText: {
+    color: '#3B82F6',
+    marginTop: 24,
+    fontSize: 16,
+    textAlign: 'center',
   },
 });
 

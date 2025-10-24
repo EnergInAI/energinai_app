@@ -20,7 +20,13 @@ const MAPPING = {
   'chart.bar.xaxis': 'bar-chart',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
-} as IconMapping;
+  'calendar': 'calendar-today',
+  'chevron.down': 'expand-more',
+  'bolt.fill': 'flash',
+  'sun.max.fill': 'wb-sunny',
+  'chart.line.uptrend.xyaxis': 'trending-up',
+  'dollarsign.circle.fill': 'monetization-on',
+} as unknown as IconMapping;
 
 /**
  * An icon component that uses native SF Symbols on iOS, and Material Icons on Android and web.

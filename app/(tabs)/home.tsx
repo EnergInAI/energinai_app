@@ -1,30 +1,12 @@
+import ConsumptionCard from '@/components/home/ConsumptionCard';
+import CurrentUsageCard from '@/components/home/CurrentUsageCard';
 import EnergyUsageHome from '@/components/home/EnergyUsageHome';
-import { FontAwesome } from '@expo/vector-icons';
-import React from 'react';
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Arimo_400Regular, Arimo_700Bold, useFonts } from '@expo-google-fonts/arimo';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Switch, Text, View } from 'react-native';
 import {
   TimeSeriesDataPoint,
 } from '../../types/types';
-
-type MetricCardProps = {
-  title: string;
-  value: string;
-  unit: string;
-  subtext: string;
-  iconName: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-};
-
-const MetricCard = ({ title, value, unit, subtext, iconName, color }: MetricCardProps) => (
-  <View style={[styles.card, { borderTopColor: color, borderTopWidth: 4 }]}>
-    <View style={styles.cardHeader}>
-      <FontAwesome name={iconName} size={20} color={color} />
-      <Text style={styles.cardTitle}>{title}</Text>
-    </View>
-    <Text style={styles.cardValue}>{value} <Text style={styles.cardUnit}>{unit}</Text></Text>
-    <Text style={styles.cardSubtext}>{subtext}</Text>
-  </View>
-);
 
  const mockChartData: TimeSeriesDataPoint[] = [
   { time: '12:00', loadKwh: 2.1, genKwh: 1.5 },
@@ -48,6 +30,17 @@ const colors = {
 };
 
 const HomeScreen = () => {
+  const [withSolar, setWithSolar] = useState(true);
+
+  let [fontsLoaded] = useFonts({
+    arimo: Arimo_400Regular,
+    'arimo-bold': Arimo_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" />
@@ -62,24 +55,33 @@ const HomeScreen = () => {
             <Text style={styles.statusText}>Online</Text>
           </View>
         </View>
+        <View style={styles.toggleContainer}>
+          <Text style={styles.toggleLabel}>Without Solar</Text>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={withSolar ? "#f5dd4b" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={() => setWithSolar(previousState => !previousState)}
+            value={withSolar}
+          />
+          <Text style={styles.toggleLabel}>With Solar</Text>
+        </View>
         <View style={styles.grid}>
-          <MetricCard
-            title="Consumption"
-            value="28.4"
-            unit="kWh"
-            subtext="₹312.40 Today"
-            iconName="bolt"
-            color={colors.consumption}
-          />
-          <MetricCard
-            title="Solar Production"
-            value="15.7"
-            unit="kWh"
-            subtext="Clean Energy"
-            iconName="sun-o"
-            color={colors.solar}
-          />
-          <MetricCard
+          {withSolar ? (
+            <CurrentUsageCard style={styles.cardFullWidth} color={colors.consumption} iconName="bolt" />
+          ) : (
+            <ConsumptionCard
+              title="Consumption"
+              value="28.4"
+              unit="kWh"
+              subtext="₹312.40 Today"
+              iconName="bolt"
+              color={colors.consumption}
+              style={styles.cardFullWidth}
+              insightText="5% better than yesterday"
+            />
+          )}
+          <ConsumptionCard
             title="Estimated Cost"
             value="₹312"
             unit="Today"
@@ -87,7 +89,7 @@ const HomeScreen = () => {
             iconName="rupee"
             color={colors.cost}
           />
-          <MetricCard
+          <ConsumptionCard
             title="CO₂ Saved"
             value="7.8"
             unit="kg"
@@ -125,10 +127,12 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: colors.text,
+    fontFamily: 'arimo',
   },
   monitorText: {
     fontSize: 16,
     color: colors.subtext,
+    fontFamily: 'arimo',
   },
   statusContainer: {
     flexDirection: 'row',
@@ -149,6 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: colors.online,
+    fontFamily: 'arimo',
   },
   grid: {
     flexDirection: 'row',
@@ -167,6 +172,21 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 3,
   },
+  cardFullWidth: {
+    width: '100%',
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginBottom: 20,
+  },
+  toggleLabel: {
+    fontSize: 16,
+    color: colors.subtext,
+    marginHorizontal: 10,
+    fontFamily: 'arimo',
+  },
   cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -177,21 +197,25 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.text,
     marginLeft: 10,
+    fontFamily: 'arimo',
   },
   cardValue: {
     fontSize: 32,
     fontWeight: 'bold',
     color: colors.text,
     marginBottom: 4,
+    fontFamily: 'arimo',
   },
   cardUnit: {
     fontSize: 16,
     fontWeight: '500',
     color: colors.subtext,
+    fontFamily: 'arimo',
   },
   cardSubtext: {
     fontSize: 14,
     color: colors.subtext,
+    fontFamily: 'arimo',
   },
   chartContainer: {
     marginTop: 20,
@@ -209,6 +233,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.text,
     marginBottom: 15,
+    fontFamily: 'arimo',
   },
 });
 
