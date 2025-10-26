@@ -23,7 +23,7 @@ const CurrentUsageCard = ({ style, color, iconName }: CurrentUsageCardProps) => 
       <View style={styles.header}>
         <View style={styles.titleContainer}>
           <FontAwesome name={iconName} size={20} color={color} />
-          <Text style={styles.title}>Current Usage</Text>
+          <Text style={styles.title}>Net Usage</Text>
         </View>
         {/* <View style={styles.liveContainer}>
           <View style={styles.liveDot} />
@@ -32,7 +32,7 @@ const CurrentUsageCard = ({ style, color, iconName }: CurrentUsageCardProps) => 
       </View>
       <View style={styles.usageContainer}>
         <Text style={styles.usageValue}>4,368.295</Text>
-        <Text style={styles.usageUnit}>W</Text>
+        <Text style={styles.usageUnit}>kW</Text>
         <View style={styles.trendContainer}>
           <FontAwesome name="long-arrow-up" size={16} color={colors.accent} />
           <Text style={styles.trendText}>2.8%</Text>
@@ -41,12 +41,12 @@ const CurrentUsageCard = ({ style, color, iconName }: CurrentUsageCardProps) => 
       <View style={styles.separator} />
       <View style={styles.footer}>
         <View style={styles.footerItem}>
-          <Text style={styles.footerLabel}>Cost/hour</Text>
-          <Text style={styles.footerValue}>$0.52</Text>
+          <Text style={styles.footerLabel}>Load</Text>
+          <Text style={styles.footerValue}>5052 kW</Text>
         </View>
         <View style={styles.footerItem}>
-          <Text style={styles.footerLabel}>Daily estimate</Text>
-          <Text style={styles.footerValue}>$12.58</Text>
+          <Text style={styles.footerLabel}>Solar</Text>
+          <Text style={styles.footerValue}>1258 kW</Text>
         </View>
       </View>
     </View>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
   trendText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: '600',
     color: colors.accent,
     marginLeft: 5,

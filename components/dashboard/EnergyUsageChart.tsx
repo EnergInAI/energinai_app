@@ -45,7 +45,7 @@ const EnergyUsageChart = ({ data }: EnergyUsageChartProps) => {
       </View>
       <LineChart
         data={chartData}
-        width={Dimensions.get('window').width - 72} // Adjust for padding
+        width={Dimensions.get('window').width - 80} // Adjust for padding
         height={220}
         chartConfig={{
           backgroundColor: '#FFFFFF',
@@ -58,11 +58,15 @@ const EnergyUsageChart = ({ data }: EnergyUsageChartProps) => {
             borderRadius: 16,
           },
           propsForDots: {
-            r: '6',
+            r: '0',
             strokeWidth: '2',
             stroke: '#ffa726',
           },
         }}
+        withInnerLines={false}
+        fromZero
+        segments={4}
+        bezier
         style={{
           marginVertical: 8,
           borderRadius: 16,

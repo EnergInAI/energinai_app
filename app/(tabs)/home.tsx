@@ -3,7 +3,9 @@ import CurrentUsageCard from '@/components/home/CurrentUsageCard';
 import EnergyUsageHome from '@/components/home/EnergyUsageHome';
 import { Arimo_400Regular, Arimo_700Bold, useFonts } from '@expo-google-fonts/arimo';
 import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Switch, Text, View } from 'react-native';
+import { Dimensions, SafeAreaView, ScrollView, StatusBar, StyleSheet, Switch, Text, View } from 'react-native';
+import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import {
   TimeSeriesDataPoint,
 } from '../../types/types';
@@ -29,8 +31,40 @@ const colors = {
     online: '#28A745',
 };
 
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+
 const HomeScreen = () => {
   const [withSolar, setWithSolar] = useState(true);
+
+  const scale = useSharedValue(1);
+  const focalX = useSharedValue(0);
+  const focalY = useSharedValue(0);
+
+  const pinchGesture = Gesture.Pinch()
+    .onUpdate((event) => {
+      scale.value = event.scale;
+      focalX.value = event.focalX;
+      focalY.value = event.focalY;
+    })
+    .onEnd(() => {
+      scale.value = withTiming(1);
+    });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: focalX.value },
+        { translateY: focalY.value },
+        { translateX: -windowWidth / 2 },
+        { translateY: -windowHeight / 2 },
+        { scale: scale.value },
+        { translateX: -focalX.value },
+        { translateY: -focalY.value },
+        { translateX: windowWidth / 2 },
+        { translateY: windowHeight / 2 },
+      ],
+    };
+  });
 
   let [fontsLoaded] = useFonts({
     arimo: Arimo_400Regular,
@@ -42,68 +76,74 @@ const HomeScreen = () => {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" />
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <View>
-            <Text style={styles.userName}>Hello, John</Text>
-            <Text style={styles.monitorText}>Your Home Energy Monitor</Text>
-          </View>
-          <View style={styles.statusContainer}>
-            <View style={styles.statusDot} />
-            <Text style={styles.statusText}>Online</Text>
-          </View>
-        </View>
-        <View style={styles.toggleContainer}>
-          <Text style={styles.toggleLabel}>Without Solar</Text>
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={withSolar ? "#f5dd4b" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={() => setWithSolar(previousState => !previousState)}
-            value={withSolar}
-          />
-          <Text style={styles.toggleLabel}>With Solar</Text>
-        </View>
-        <View style={styles.grid}>
-          {withSolar ? (
-            <CurrentUsageCard style={styles.cardFullWidth} color={colors.consumption} iconName="bolt" />
-          ) : (
-            <ConsumptionCard
-              title="Consumption"
-              value="28.4"
-              unit="kWh"
-              subtext="₹312.40 Today"
-              iconName="bolt"
-              color={colors.consumption}
-              style={styles.cardFullWidth}
-              insightText="5% better than yesterday"
-            />
-          )}
-          <ConsumptionCard
-            title="Estimated Cost"
-            value="₹312"
-            unit="Today"
-            subtext="Est. ₹9,360/month"
-            iconName="rupee"
-            color={colors.cost}
-          />
-          <ConsumptionCard
-            title="CO₂ Saved"
-            value="7.8"
-            unit="kg"
-            subtext="Equivalent to 1 tree"
-            iconName="leaf"
-            color={colors.co2}
-          />
-        </View>
-        <View style={styles.chartContainer}>
-          <Text style={styles.chartTitle}>Today's Energy Usage</Text>
-          <EnergyUsageHome data={mockChartData} />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <GestureDetector gesture={pinchGesture}>
+        <Animated.View style={[{ flex: 1 }, animatedStyle]}>
+          <SafeAreaView style={styles.safeArea}>
+            <StatusBar barStyle="dark-content" />
+            <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+              <View style={styles.header}>
+                <View>
+                  <Text style={styles.userName}>Hello, John</Text>
+                  <Text style={styles.monitorText}>Your Home Energy Monitor</Text>
+                </View>
+                <View style={styles.statusContainer}>
+                  <View style={styles.statusDot} />
+                  <Text style={styles.statusText}>Online</Text>
+                </View>
+              </View>
+              <View style={styles.toggleContainer}>
+                <Text style={styles.toggleLabel}>Without Solar</Text>
+                <Switch
+                  trackColor={{ false: "#767577", true: "#81b0ff" }}
+                  thumbColor={withSolar ? "#f5dd4b" : "#f4f3f4"}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={() => setWithSolar(previousState => !previousState)}
+                  value={withSolar}
+                />
+                <Text style={styles.toggleLabel}>With Solar</Text>
+              </View>
+              <View style={styles.grid}>
+                {withSolar ? (
+                  <CurrentUsageCard style={styles.cardFullWidth} color={colors.consumption} iconName="bolt" />
+                ) : (
+                  <ConsumptionCard
+                    title="Consumption"
+                    value="28.4"
+                    unit="kWh"
+                    subtext="₹312.40 Today"
+                    iconName="bolt"
+                    color={colors.consumption}
+                    style={styles.cardFullWidth}
+                    insightText="5% better than yesterday"
+                  />
+                )}
+                <ConsumptionCard
+                  title="Estimated Cost"
+                  value="₹312"
+                  unit="Today"
+                  subtext="Est. ₹9,360/month"
+                  iconName="rupee"
+                  color={colors.cost}
+                />
+                <ConsumptionCard
+                  title="CO₂ Saved"
+                  value="7.8"
+                  unit="kg"
+                  subtext="Equivalent to 1 tree"
+                  iconName="leaf"
+                  color={colors.co2}
+                />
+              </View>
+              <View style={styles.chartContainer}>
+                <Text style={styles.chartTitle}>Today's Energy Usage</Text>
+                <EnergyUsageHome data={mockChartData} />
+              </View>
+            </ScrollView>
+          </SafeAreaView>
+        </Animated.View>
+      </GestureDetector>
+    </GestureHandlerRootView>
   );
 };
 

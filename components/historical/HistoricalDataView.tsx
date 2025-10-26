@@ -3,10 +3,14 @@ import { ThemedView } from '@/components/themed-view';
 import { dailyData, monthlyData } from '@/constants/mockData';
 import { Fonts } from '@/constants/theme';
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import DataCard from './DataCard';
 
 type ViewType = 'daily' | 'monthly';
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 const HistoricalDataView = () => {
   const [activeView, setActiveView] = useState<ViewType>('daily');
@@ -14,34 +18,70 @@ const HistoricalDataView = () => {
   const data = activeView === 'daily' ? dailyData : monthlyData;
   const title = activeView === 'daily' ? 'Daily Summary' : 'Monthly Summary';
 
-  return (
-    <ThemedView style={styles.container}>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, activeView === 'daily' && styles.activeButton]}
-          onPress={() => setActiveView('daily')}>
-          <ThemedText style={[styles.buttonText, activeView === 'daily' && styles.activeButtonText]}>
-            Daily
-          </ThemedText>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, activeView === 'monthly' && styles.activeButton]}
-          onPress={() => setActiveView('monthly')}>
-          <ThemedText style={[styles.buttonText, activeView === 'monthly' && styles.activeButtonText]}>
-            Monthly
-          </ThemedText>
-        </TouchableOpacity>
-      </View>
+  const scale = useSharedValue(1);
+  const focalX = useSharedValue(0);
+  const focalY = useSharedValue(0);
 
-      <ThemedView style={styles.summaryContainer}>
-        <ThemedText style={styles.summaryTitle}>{title}</ThemedText>
-        <ScrollView>
-          {data.map((group, index) => (
-            <DataCard key={index} title={group.month} data={group.data} isDaily={activeView === 'daily'} />
-          ))}
-        </ScrollView>
-      </ThemedView>
-    </ThemedView>
+  const pinchGesture = Gesture.Pinch()
+    .onUpdate((event) => {
+      scale.value = event.scale;
+      focalX.value = event.focalX;
+      focalY.value = event.focalY;
+    })
+    .onEnd(() => {
+      scale.value = withTiming(1);
+    });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: focalX.value },
+        { translateY: focalY.value },
+        { translateX: -windowWidth / 2 },
+        { translateY: -windowHeight / 2 },
+        { scale: scale.value },
+        { translateX: -focalX.value },
+        { translateY: -focalY.value },
+        { translateX: windowWidth / 2 },
+        { translateY: windowHeight / 2 },
+      ],
+    };
+  });
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <GestureDetector gesture={pinchGesture}>
+        <Animated.View style={[{ flex: 1 }, animatedStyle]}>
+          <ThemedView style={styles.container}>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[styles.button, activeView === 'daily' && styles.activeButton]}
+                onPress={() => setActiveView('daily')}>
+                <ThemedText style={[styles.buttonText, activeView === 'daily' && styles.activeButtonText]}>
+                  Daily
+                </ThemedText>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, activeView === 'monthly' && styles.activeButton]}
+                onPress={() => setActiveView('monthly')}>
+                <ThemedText style={[styles.buttonText, activeView === 'monthly' && styles.activeButtonText]}>
+                  Monthly
+                </ThemedText>
+              </TouchableOpacity>
+            </View>
+
+            <ThemedView style={styles.summaryContainer}>
+              <ThemedText style={styles.summaryTitle}>{title}</ThemedText>
+              <ScrollView>
+                {data.map((group, index) => (
+                  <DataCard key={index} title={group.month} data={group.data} isDaily={activeView === 'daily'} />
+                ))}
+              </ScrollView>
+            </ThemedView>
+          </ThemedView>
+        </Animated.View>
+      </GestureDetector>
+    </GestureHandlerRootView>
   );
 };
 
@@ -83,7 +123,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   activeButtonText: {
-    color: '#fff',
+    color: '#030303ff',
   },
   summaryContainer: {
     flex: 1,

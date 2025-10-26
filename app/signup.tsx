@@ -21,9 +21,10 @@ const SignupScreen = () => {
   const [password, setPassword] = useState('');
   const [confirmationCode, setConfirmationCode] = useState('');
   const [solarCapacity, setSolarCapacity] = useState('');
+  const [deviceId, setDeviceId] = useState('');
 
   const handleSignUp = async () => {
-    if (!name || !email || !phoneNumber || !password || !ivrsNumber) {
+    if (!name || !email || !phoneNumber || !password || !ivrsNumber || !deviceId) {
       Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
@@ -39,6 +40,7 @@ const SignupScreen = () => {
             phone_number: formattedPhoneNumber,
             'custom:ivrs_number': ivrsNumber,
             'custom:solar_capacity': solarCapacity || '0',
+            'custom:device_id': deviceId,
           },
         }
       });
@@ -102,6 +104,7 @@ const SignupScreen = () => {
             <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" autoCapitalize="none" placeholderTextColor="#999" />
             <TextInput style={styles.input} placeholder="Phone Number" value={phoneNumber} onChangeText={setPhoneNumber} keyboardType="phone-pad" placeholderTextColor="#999" />
             <TextInput style={styles.input} placeholder="IVRS Number" value={ivrsNumber} onChangeText={setIvrsNumber} keyboardType="number-pad" placeholderTextColor="#999" />
+            <TextInput style={styles.input} placeholder="Device ID" value={deviceId} onChangeText={setDeviceId} autoCapitalize="none" placeholderTextColor="#999" />
             <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry placeholderTextColor="#999" />
             <TextInput style={styles.input} placeholder="Solar Capacity (enter only if u have solar)" value={solarCapacity} onChangeText={setSolarCapacity} keyboardType="number-pad" placeholderTextColor="#999" />
             <TouchableOpacity style={styles.button} onPress={handleSignUp}>

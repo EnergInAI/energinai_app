@@ -1,12 +1,13 @@
 // Dashboard.tsx
 
-import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-
 import { PubSub as PubSubClass } from '@aws-amplify/pubsub';
 import { Amplify } from 'aws-amplify';
 import { fetchAuthSession } from 'aws-amplify/auth';
 import { ConsoleLogger } from 'aws-amplify/utils';
+import React, { useEffect, useRef, useState } from 'react';
+import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import awsConfig from '../../src/aws-exports';
 import {
   EnergyDataState,
@@ -44,6 +45,7 @@ interface IoTData {
 
 // (chart mock omitted for brevity)
 
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 const Dashboard = () => {
   const [iotData, setIotData] = useState<IoTData | null>(null);
@@ -157,17 +159,53 @@ const mockEnergyData: EnergyDataState = {
       }
     : mockEnergyData.generation;
 
+  const scale = useSharedValue(1);
+  const focalX = useSharedValue(0);
+  const focalY = useSharedValue(0);
+
+  const pinchGesture = Gesture.Pinch()
+    .onUpdate((event) => {
+      scale.value = event.scale;
+      focalX.value = event.focalX;
+      focalY.value = event.focalY;
+    })
+    .onEnd(() => {
+      scale.value = withTiming(1);
+    });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { translateX: focalX.value },
+        { translateY: focalY.value },
+        { translateX: -windowWidth / 2 },
+        { translateY: -windowHeight / 2 },
+        { scale: scale.value },
+        { translateX: -focalX.value },
+        { translateY: -focalY.value },
+        { translateX: windowWidth / 2 },
+        { translateY: windowHeight / 2 },
+      ],
+    };
+  });
+
   return (
-     <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        <GreetingCard />
-        <DetailedMetricsPanel
-          loadMetrics={loadMetrics}
-          genMetrics={genMetrics}
-        />
-        <EnergyUsageChart data={mockChartData} />
-      </View>
-    </ScrollView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <GestureDetector gesture={pinchGesture}>
+        <Animated.View style={[styles.container, animatedStyle]}>
+          <ScrollView>
+            <View style={styles.content}>
+              <GreetingCard />
+              <DetailedMetricsPanel
+                loadMetrics={loadMetrics}
+                genMetrics={genMetrics}
+              />
+              <EnergyUsageChart data={mockChartData} />
+            </View>
+          </ScrollView>
+        </Animated.View>
+      </GestureDetector>
+    </GestureHandlerRootView>
   );
 };
 

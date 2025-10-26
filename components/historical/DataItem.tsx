@@ -63,8 +63,8 @@ const DataItem = ({ item, isDaily }: DataItemProps) => {
           </View>
           <View style={styles.metricContent}>
             <ThemedText style={styles.metricLabel}>Cost</ThemedText>
-            <ThemedText style={styles.metricValue}>${item.cost.toFixed(2)}</ThemedText>
-            <ThemedText style={styles.metricUnit}>USD</ThemedText>
+            <ThemedText style={styles.metricValue}>₹{item.cost.toFixed(2)}</ThemedText>
+            <ThemedText style={styles.metricUnit}>Rupees</ThemedText>
           </View>
         </View>
       </View>
@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+    marginLeft: 4,
   },
   metricContent: {
     flex: 1,

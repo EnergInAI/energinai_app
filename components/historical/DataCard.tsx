@@ -42,7 +42,7 @@ const DataCard = ({ title, data, isDaily }: DataCardProps) => {
       >
         <View style={styles.headerLeft}>
           <View style={styles.monthIconContainer}>
-            <IconSymbol name="calendar" size={24} color="#6C5CE7" />
+            <IconSymbol name="calendar" size={24} color="#4A90E2" />
           </View>
           <View>
             <ThemedText style={styles.headerText}>{title}</ThemedText>
@@ -53,7 +53,7 @@ const DataCard = ({ title, data, isDaily }: DataCardProps) => {
         </View>
         <Animated.View style={{ transform: [{ rotate: rotateInterpolate }] }}>
           <View style={styles.chevronContainer}>
-            <IconSymbol name="chevron.down" size={20} color="#6C5CE7" />
+            <IconSymbol name="chevron.down" size={20} color="#4A90E2" />
           </View>
         </Animated.View>
       </TouchableOpacity>
