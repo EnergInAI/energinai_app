@@ -1,7 +1,8 @@
 import ConsumptionCard from '@/components/home/ConsumptionCard';
 import CurrentUsageCard from '@/components/home/CurrentUsageCard';
 import EnergyUsageHome from '@/components/home/EnergyUsageHome';
-import { Arimo_400Regular, Arimo_700Bold, useFonts } from '@expo-google-fonts/arimo';
+import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, useFonts } from '@expo-google-fonts/inter';
+import { Poppins_500Medium, Poppins_600SemiBold } from '@expo-google-fonts/poppins';
 import React, { useState } from 'react';
 import { Dimensions, SafeAreaView, ScrollView, StatusBar, StyleSheet, Switch, Text, View } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -20,15 +21,21 @@ import {
 ];
 
 const colors = {
-    consumption: '#FF7B2B',
-    solar: '#FFD15C',
-    cost: '#4A90E2',
-    co2: '#28A745',
-    background: '#F8F9FA',
-    text: '#343A40',
-    subtext: '#6C757D',
-    cardBackground: '#FFFFFF',
-    online: '#28A745',
+  primaryBlue: '#0d274d',
+  accentOrange: '#f28c28',
+  accentGreen: '#28a745',
+  backgroundLight: '#ffffff',
+  backgroundSoft: '#fafafa',
+  textDark: '#222',
+  textMuted: '#777',
+  consumption: '#f28c28', // using accent-orange for consumption
+  cost: '#0d274d', // using primary-blue for cost
+  co2: '#28a745', // accent-green
+  background: '#fafafa', // background-soft
+  text: '#222', // text-dark
+  subtext: '#777', // text-muted
+  cardBackground: '#ffffff', // background-light
+  online: '#28a745', // accent-green
 };
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
@@ -67,8 +74,11 @@ const HomeScreen = () => {
   });
 
   let [fontsLoaded] = useFonts({
-    arimo: Arimo_400Regular,
-    'arimo-bold': Arimo_700Bold,
+    interRegular: Inter_400Regular,
+    interMedium: Inter_500Medium,
+    interSemiBold: Inter_600SemiBold,
+    poppinsMedium: Poppins_500Medium,
+    poppinsSemiBold: Poppins_600SemiBold,
   });
 
   if (!fontsLoaded) {
@@ -164,15 +174,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   userName: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: 26,
+    fontWeight: '600',
     color: colors.text,
-    fontFamily: 'arimo',
+    fontFamily: 'Poppins-SemiBold',
   },
   monitorText: {
     fontSize: 16,
     color: colors.subtext,
-    fontFamily: 'arimo',
+    fontFamily: 'Inter-Regular',
   },
   statusContainer: {
     flexDirection: 'row',
@@ -193,7 +203,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: colors.online,
-    fontFamily: 'arimo',
+    fontFamily: 'Inter-SemiBold',
   },
   grid: {
     flexDirection: 'row',
@@ -225,7 +235,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.subtext,
     marginHorizontal: 10,
-    fontFamily: 'arimo',
+    fontFamily: 'Inter-Regular',
   },
   cardHeader: {
     flexDirection: 'row',
@@ -237,43 +247,43 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.text,
     marginLeft: 10,
-    fontFamily: 'arimo',
+    fontFamily: 'Inter-SemiBold',
   },
   cardValue: {
     fontSize: 32,
     fontWeight: 'bold',
     color: colors.text,
     marginBottom: 4,
-    fontFamily: 'arimo',
+    fontFamily: 'Inter-Regular',
   },
   cardUnit: {
     fontSize: 16,
     fontWeight: '500',
     color: colors.subtext,
-    fontFamily: 'arimo',
+    fontFamily: 'Inter-Medium',
   },
   cardSubtext: {
     fontSize: 14,
     color: colors.subtext,
-    fontFamily: 'arimo',
+    fontFamily: 'Inter-Regular',
   },
   chartContainer: {
     marginTop: 20,
     backgroundColor: colors.cardBackground,
-    borderRadius: 16,
+    borderRadius: 18,
     padding: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
     elevation: 3,
   },
   chartTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 20,
+    fontWeight: '600',
     color: colors.text,
     marginBottom: 15,
-    fontFamily: 'arimo',
+    fontFamily: 'Poppins-SemiBold',
   },
 });
 

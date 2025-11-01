@@ -3,12 +3,12 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 const colors = {
-    text: '#343A40',
-    subtext: '#6C757D',
-    cardBackground: '#FFFFFF',
-    online: '#28A745',
-    separator: '#E9ECEF',
-    accent: '#DC3545',
+  text: '#222',
+  subtext: '#777',
+  cardBackground: '#ffffff',
+  online: '#28a745',
+  separator: '#e9ecef',
+  accent: '#dc3545',
 };
 
 interface CurrentUsageCardProps {
@@ -56,13 +56,13 @@ const CurrentUsageCard = ({ style, color, iconName }: CurrentUsageCardProps) => 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.cardBackground,
-    borderRadius: 16,
+    borderRadius: 18,
     padding: 20,
-    marginBottom: 20,
-    shadowColor: '#000',
+    marginBottom: 24,
+    shadowColor: '#0d274d',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
     elevation: 3,
   },
   header: {
@@ -80,11 +80,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.text,
     marginLeft: 8,
-    },
+    fontFamily: 'Inter-SemiBold',
+  },
   liveContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#E9F7EF',
+    backgroundColor: '#e9f7ef',
     paddingVertical: 6,
     paddingHorizontal: 10,
     borderRadius: 15,
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: colors.online,
+    fontFamily: 'Inter-SemiBold',
   },
   usageContainer: {
     flexDirection: 'row',
@@ -111,12 +113,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.text,
     marginLeft: 18,
+    fontFamily: 'Inter-Regular',
   },
   usageUnit: {
     fontSize: 21,
     fontWeight: '500',
     color: colors.text,
     marginLeft: 8,
+    fontFamily: 'Inter-Medium',
   },
   trendContainer: {
     flexDirection: 'row',
@@ -128,6 +132,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.accent,
     marginLeft: 5,
+    fontFamily: 'Inter-SemiBold',
   },
   separator: {
     height: 1,
@@ -145,11 +150,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.subtext,
     marginBottom: 4,
+    fontFamily: 'Inter-Regular',
   },
   footerValue: {
     fontSize: 18,
     fontWeight: '600',
     color: colors.text,
+    fontFamily: 'Inter-SemiBold',
   },
 });
 

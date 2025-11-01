@@ -14,9 +14,9 @@ type ConsumptionCardProps = {
 };
 
 const colors = {
-    text: '#343A40',
-    subtext: '#6C757D',
-    cardBackground: '#FFFFFF',
+  text: '#222',
+  subtext: '#777',
+  cardBackground: '#ffffff',
 };
 
 const ConsumptionCard = ({ title, value, unit, subtext, iconName, color, style, insightText }: ConsumptionCardProps) => (
@@ -42,14 +42,14 @@ const ConsumptionCard = ({ title, value, unit, subtext, iconName, color, style, 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.cardBackground,
-    borderRadius: 16,
-    padding: 18,
+    borderRadius: 18,
+    padding: 20,
     width: '48%',
-    marginBottom: 20,
-    shadowColor: '#000',
+    marginBottom: 24,
+    shadowColor: '#0d274d',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
     elevation: 3,
   },
   cardHeader: {
@@ -58,25 +58,29 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   cardTitle: {
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: '600',
     color: colors.text,
     marginLeft: 10,
+    fontFamily: 'Inter-SemiBold',
   },
   cardValue: {
     fontSize: 32,
     fontWeight: 'bold',
     color: colors.text,
     marginBottom: 4,
+    fontFamily: 'Inter-Regular',
   },
   cardUnit: {
     fontSize: 16,
     fontWeight: '500',
     color: colors.subtext,
+    fontFamily: 'Inter-Medium',
   },
   cardSubtext: {
     fontSize: 14,
     color: colors.subtext,
+    fontFamily: 'Inter-Regular',
   },
   contentContainer: {
     flexDirection: 'row',
@@ -89,7 +93,8 @@ const styles = StyleSheet.create({
   insightText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#28A745', // A green color for positive insights
+    color: '#28a745', // accent-green
+    fontFamily: 'Inter-SemiBold',
   },
 });
 
