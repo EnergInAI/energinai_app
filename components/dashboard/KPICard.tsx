@@ -27,9 +27,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: '#94A3B8',
+    color: '#777',
     fontSize: 12,
     marginTop: 4,
+    fontFamily: 'Inter-Regular',
   },
   body: {
     flexDirection: 'row',
@@ -37,11 +38,13 @@ const styles = StyleSheet.create({
   },
   value: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
   unit: {
-    color: '#94A3B8',
+    color: '#777',
     marginLeft: 4,
+    fontFamily: 'Inter-Regular',
   },
 });
 

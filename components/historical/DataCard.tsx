@@ -1,7 +1,6 @@
 import { ThemedText } from '@/components/themed-text';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { DailyData, MonthlyData } from '@/constants/mockData';
-import { Fonts } from '@/constants/theme';
 import React, { useState } from 'react';
 import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
 import DataItem from './DataItem';
@@ -116,14 +115,14 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   headerText: {
-    fontFamily: Fonts.rounded,
+    fontFamily: 'Poppins-SemiBold',
     fontSize: 20,
     fontWeight: '700',
     color: '#2C3E50',
     marginBottom: 2,
   },
   headerSubtext: {
-    fontFamily: Fonts.rounded,
+    fontFamily: 'Inter-Regular',
     fontSize: 13,
     fontWeight: '500',
     color: '#95A5A6',

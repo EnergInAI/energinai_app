@@ -1,6 +1,5 @@
 import { ThemedText } from '@/components/themed-text';
 import { DailyData, MonthlyData } from '@/constants/mockData';
-import { Fonts } from '@/constants/theme';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { IconSymbol } from '../ui/icon-symbol';
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F0F0F0',
   },
   dateText: {
-    fontFamily: Fonts.rounded,
+    fontFamily: 'Inter-SemiBold',
     fontSize: 16,
     fontWeight: '700',
     color: '#2C3E50',
@@ -154,7 +153,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   metricLabel: {
-    fontFamily: Fonts.rounded,
+    fontFamily: 'Inter-Regular',
     fontSize: 11,
     fontWeight: '600',
     color: '#7F8C8D',
@@ -163,14 +162,14 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   metricValue: {
-    fontFamily: Fonts.rounded,
+    fontFamily: 'Poppins-SemiBold',
     fontSize: 18,
     fontWeight: '700',
     color: '#2C3E50',
     marginBottom: 2,
   },
   metricUnit: {
-    fontFamily: Fonts.rounded,
+    fontFamily: 'Inter-Regular',
     fontSize: 10,
     fontWeight: '500',
     color: '#95A5A6',

@@ -12,7 +12,7 @@ interface MetricsListProps {
 type MetricIcon = keyof typeof MaterialCommunityIcons.glyphMap;
 
 const MetricsList = ({ title, metrics }: MetricsListProps) => {
-  const isLoad = title === 'Load Metrics';
+  const isLoad = title === 'Consumption';
   const iconColor = isLoad ? '#F97316' : '#22C55E';
 
   const metricsData: { label: string; value: string | number; unit: string; icon: MetricIcon }[] = [
@@ -26,7 +26,10 @@ const MetricsList = ({ title, metrics }: MetricsListProps) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+      <View style={styles.titleContainer}>
+        <View style={[styles.verticalLine, { backgroundColor: iconColor }]} />
+        <Text style={styles.title}>{title}</Text>
+      </View>
       <View style={styles.grid}>
         {metricsData.map(metric => (
           <View key={metric.label} style={styles.metricWrapper}>
@@ -46,11 +49,21 @@ const MetricsList = ({ title, metrics }: MetricsListProps) => {
 
 const styles = StyleSheet.create({
   container: {},
-  title: {
-    color: '#0F172A',
-    fontSize: 20,
-    fontWeight: 'bold',
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 16,
+  },
+  verticalLine: {
+    width: 4,
+    height: 20,
+    marginRight: 8,
+  },
+  title: {
+    color: '#222',
+    fontSize: 20,
+    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
   grid: {
     flexDirection: 'row',

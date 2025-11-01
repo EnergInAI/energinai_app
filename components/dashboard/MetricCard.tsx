@@ -29,12 +29,12 @@ const MetricCard = ({ label, value, unit, icon, iconColor = '#F97316' }: MetricC
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#ffffff',
     borderRadius: 12,
     padding: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#E2E8F0',
+    borderColor: '#e2e8f0',
   },
   iconContainer: {
     borderRadius: 999,
@@ -46,19 +46,22 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   value: {
-    color: '#0F172A',
+    color: '#222',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
   unit: {
-    color: '#475569',
+    color: '#777',
     fontSize: 10,
     marginLeft: 2,
+    fontFamily: 'Inter-Regular',
   },
   label: {
-    color: '#475569',
+    color: '#777',
     fontSize: 10,
     marginTop: 2,
+    fontFamily: 'Inter-Regular',
   },
 });
 

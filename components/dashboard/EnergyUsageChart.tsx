@@ -78,9 +78,14 @@ const EnergyUsageChart = ({ data }: EnergyUsageChartProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
+    backgroundColor: '#ffffff',
+    borderRadius: 18,
     padding: 20,
+    shadowColor: '#0d274d',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
+    elevation: 3,
   },
   header: {
     flexDirection: 'row',
@@ -89,13 +94,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   title: {
-    color: '#0F172A',
+    color: '#222',
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
   timeRangeSelector: {
     flexDirection: 'row',
-    backgroundColor: '#F1F5F9',
+    backgroundColor: '#fafafa',
     borderRadius: 20,
   },
   timeRangeButton: {
@@ -104,14 +110,16 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   activeTimeRangeButton: {
-    backgroundColor: '#3B82F6',
+    backgroundColor: '#0d274d',
   },
   timeRangeButtonText: {
-    color: '#475569',
+    color: '#777',
     fontWeight: '600',
+    fontFamily: 'Inter-SemiBold',
   },
   activeTimeRangeButtonText: {
-    color: '#FFFFFF',
+    color: '#ffffff',
+    fontFamily: 'Inter-SemiBold',
   },
 });
 

@@ -30,11 +30,16 @@ const GreetingCard = () => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 16,
+    backgroundColor: '#ffffff',
+    borderRadius: 18,
     padding: 20,
-    marginBottom: 16,
+    marginBottom: 24,
     marginTop: 16,
+    shadowColor: '#0d274d',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 12,
+    elevation: 3,
   },
   header: {
     flexDirection: 'row',
@@ -47,8 +52,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   date: {
-    color: '#475569',
+    color: '#777',
     marginLeft: 8,
+    fontFamily: 'Inter-Regular',
   },
   eventsContainer: {
     flexDirection: 'row',
@@ -59,18 +65,21 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   events: {
-    color: '#22C55E',
+    color: '#28a745',
     marginLeft: 8,
+    fontFamily: 'Inter-SemiBold',
   },
   greeting: {
-    color: '#0F172A',
+    color: '#222',
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: '600',
+    fontFamily: 'Poppins-SemiBold',
   },
   subGreeting: {
-    color: '#475569',
+    color: '#777',
     fontSize: 16,
     marginTop: 4,
+    fontFamily: 'Inter-Regular',
   },
   kpiContainer: {
     marginTop: 20,
