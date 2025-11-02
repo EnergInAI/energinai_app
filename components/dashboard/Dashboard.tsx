@@ -15,6 +15,7 @@ import {
   LoadMetrics,
   TimeSeriesDataPoint,
 } from '../../types/types';
+import Header from '../ui/Header';
 import DetailedMetricsPanel from './DetailedMetricsPanel';
 import EnergyUsageChart from './EnergyUsageChart';
 import GreetingCard from './GreetingCard';
@@ -193,6 +194,7 @@ const mockEnergyData: EnergyDataState = {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <GestureDetector gesture={pinchGesture}>
         <Animated.View style={[styles.container, animatedStyle]}>
+          <Header />
           <ScrollView>
             <View style={styles.content}>
               <GreetingCard />

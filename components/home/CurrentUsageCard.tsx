@@ -19,10 +19,10 @@ interface CurrentUsageCardProps {
 
 const CurrentUsageCard = ({ style, color, iconName }: CurrentUsageCardProps) => {
   return (
-    <View style={[styles.card, { borderTopColor: color, borderTopWidth: 4 }, style]}>
+    <View style={[styles.card, style]}>
       <View style={styles.header}>
         <View style={styles.titleContainer}>
-          <FontAwesome name={iconName} size={20} color={color} />
+          <FontAwesome name={iconName} size={16} color={color} />
           <Text style={styles.title}>Net Usage</Text>
         </View>
         {/* <View style={styles.liveContainer}>
@@ -56,14 +56,11 @@ const CurrentUsageCard = ({ style, color, iconName }: CurrentUsageCardProps) => 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.cardBackground,
-    borderRadius: 18,
-    padding: 20,
-    marginBottom: 24,
-    shadowColor: '#0d274d',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.06,
-    shadowRadius: 12,
-    elevation: 3,
+    borderRadius: 12,
+    padding: 18,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
   },
   header: {
     flexDirection: 'row',
@@ -72,15 +69,16 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   titleContainer: {
+    marginLeft: 22,
     flexDirection: 'row',
     alignItems: 'center',
   },
   title: {
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: '100',
     color: colors.text,
     marginLeft: 8,
-    fontFamily: 'Inter-SemiBold',
+    fontFamily: 'Poppins-SemiBold',
   },
   liveContainer: {
     flexDirection: 'row',
@@ -112,7 +110,7 @@ const styles = StyleSheet.create({
     fontSize: 21,
     fontWeight: 'bold',
     color: colors.text,
-    marginLeft: 18,
+    marginLeft: 37,
     fontFamily: 'Inter-Regular',
   },
   usageUnit: {
@@ -144,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   footerItem: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   footerLabel: {
     fontSize: 14,

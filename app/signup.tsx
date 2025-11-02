@@ -22,9 +22,10 @@ const SignupScreen = () => {
   const [confirmationCode, setConfirmationCode] = useState('');
   const [solarCapacity, setSolarCapacity] = useState('');
   const [deviceId, setDeviceId] = useState('');
+  const [currMeterReading, setCurrMeterReading] = useState('');
 
   const handleSignUp = async () => {
-    if (!name || !email || !phoneNumber || !password || !ivrsNumber || !deviceId) {
+    if (!name || !email || !phoneNumber || !password || !ivrsNumber || !deviceId || !currMeterReading) {
       Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
@@ -41,6 +42,7 @@ const SignupScreen = () => {
             'custom:ivrs_number': ivrsNumber,
             'custom:solar_capacity': solarCapacity || '0',
             'custom:device_id': deviceId,
+            'custom:curr_meter_reading': currMeterReading || '0',
           },
         }
       });
@@ -105,6 +107,7 @@ const SignupScreen = () => {
             <TextInput style={styles.input} placeholder="Phone Number" value={phoneNumber} onChangeText={setPhoneNumber} keyboardType="phone-pad" placeholderTextColor="#999" />
             <TextInput style={styles.input} placeholder="IVRS Number" value={ivrsNumber} onChangeText={setIvrsNumber} keyboardType="number-pad" placeholderTextColor="#999" />
             <TextInput style={styles.input} placeholder="Device ID" value={deviceId} onChangeText={setDeviceId} autoCapitalize="none" placeholderTextColor="#999" />
+            <TextInput style={styles.input} placeholder="Current Meter Reading" value={currMeterReading} onChangeText={setCurrMeterReading} keyboardType="number-pad" placeholderTextColor="#999" />
             <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry placeholderTextColor="#999" />
             <TextInput style={styles.input} placeholder="Solar Capacity (enter only if u have solar)" value={solarCapacity} onChangeText={setSolarCapacity} keyboardType="number-pad" placeholderTextColor="#999" />
             <TouchableOpacity style={styles.button} onPress={handleSignUp}>

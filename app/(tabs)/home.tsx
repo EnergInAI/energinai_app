@@ -1,6 +1,7 @@
 import ConsumptionCard from '@/components/home/ConsumptionCard';
 import CurrentUsageCard from '@/components/home/CurrentUsageCard';
 import EnergyUsageHome from '@/components/home/EnergyUsageHome';
+import Header from '@/components/ui/Header';
 import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, useFonts } from '@expo-google-fonts/inter';
 import { Poppins_500Medium, Poppins_600SemiBold } from '@expo-google-fonts/poppins';
 import React, { useState } from 'react';
@@ -10,6 +11,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import {
   TimeSeriesDataPoint,
 } from '../../types/types';
+
 
  const mockChartData: TimeSeriesDataPoint[] = [
   { time: '12:00', loadKwh: 2.1, genKwh: 1.5 },
@@ -37,6 +39,8 @@ const colors = {
   cardBackground: '#ffffff', // background-light
   online: '#28a745', // accent-green
 };
+
+const logo = require('../../assets/images/energinai-logo.png');
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
@@ -91,15 +95,18 @@ const HomeScreen = () => {
         <Animated.View style={[{ flex: 1 }, animatedStyle]}>
           <SafeAreaView style={styles.safeArea}>
             <StatusBar barStyle="dark-content" />
+            <Header />
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-              <View style={styles.header}>
-                <View>
-                  <Text style={styles.userName}>Hello, John</Text>
-                  <Text style={styles.monitorText}>Your Home Energy Monitor</Text>
-                </View>
-                <View style={styles.statusContainer}>
-                  <View style={styles.statusDot} />
-                  <Text style={styles.statusText}>Online</Text>
+              <View style={styles.headerCard}>
+                <View style={styles.headerContent}>
+                  <View>
+                    <Text style={styles.userName}>Hello, John</Text>
+                    <Text style={styles.monitorText}>Your Home Energy Monitor</Text>
+                  </View>
+                  <View style={styles.statusContainer}>
+                    <View style={styles.statusDot} />
+                    <Text style={styles.statusText}>Online</Text>
+                  </View>
                 </View>
               </View>
               <View style={styles.toggleContainer}>
@@ -129,18 +136,34 @@ const HomeScreen = () => {
                   />
                 )}
                 <ConsumptionCard
-                  title="Estimated Cost"
-                  value="₹312"
-                  unit="Today"
-                  subtext="Est. ₹9,360/month"
+                  title="Today's Cost"
+                  value="$8.45"
+                  unit=""
+                  subtext="Today's energy cost"
                   iconName="rupee"
                   color={colors.cost}
                 />
                 <ConsumptionCard
+                  title="This Month"
+                  value="$187"
+                  unit=""
+                  subtext="Monthly energy cost"
+                  iconName="rupee"
+                  color={colors.cost}
+                />
+                <ConsumptionCard
+                  title="Daily Average"
+                  value="2,650"
+                  unit="W"
+                  subtext="Average power usage"
+                  iconName="bolt"
+                  color={colors.consumption}
+                />
+                <ConsumptionCard
                   title="CO₂ Saved"
-                  value="7.8"
+                  value="12.3"
                   unit="kg"
-                  subtext="Equivalent to 1 tree"
+                  subtext="Equivalent to 2 trees"
                   iconName="leaf"
                   color={colors.co2}
                 />
@@ -166,12 +189,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  headerCard: {
+    backgroundColor: colors.cardBackground,
+    borderRadius: 16,
+    padding: 18,
     marginBottom: 30,
     marginTop: 20,
+   
   },
   userName: {
     fontSize: 26,
@@ -204,6 +228,17 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.online,
     fontFamily: 'Inter-SemiBold',
+  },
+  logo: {
+    width: 150,
+    height: 50,
+    alignSelf: 'center',
+    marginBottom: 10,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   grid: {
     flexDirection: 'row',

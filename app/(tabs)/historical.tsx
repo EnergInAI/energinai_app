@@ -3,11 +3,13 @@ import { StyleSheet } from 'react-native';
 import HistoricalDataView from '@/components/historical/HistoricalDataView';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import Header from '@/components/ui/Header';
 import { Fonts } from '@/constants/theme';
 
 export default function HistoricalScreen() {
   return (
     <>
+    <Header />
     <ThemedView style={styles.titleContainer}>
         <ThemedText
           type="title"

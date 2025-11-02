@@ -19,22 +19,14 @@ const colors = {
   cardBackground: '#ffffff',
 };
 
-const ConsumptionCard = ({ title, value, unit, subtext, iconName, color, style, insightText }: ConsumptionCardProps) => (
-  <View style={[styles.card, { borderTopColor: color, borderTopWidth: 4 }, style]}>
-    <View style={styles.cardHeader}>
-      <FontAwesome name={iconName} size={20} color={color} />
-      <Text style={styles.cardTitle}>{title}</Text>
+const ConsumptionCard = ({ title, value, unit, subtext, iconName, color, style }: ConsumptionCardProps) => (
+  <View style={[styles.card, style]}>
+    <View style={styles.iconContainer}>
+      <FontAwesome name={iconName} size={24} color={color} />
     </View>
-    <View style={styles.contentContainer}>
-      <View>
-        <Text style={styles.cardValue}>{value} <Text style={styles.cardUnit}>{unit}</Text></Text>
-        <Text style={styles.cardSubtext}>{subtext}</Text>
-      </View>
-      {insightText && (
-        <View style={styles.insightContainer}>
-          <Text style={styles.insightText}>{insightText}</Text>
-        </View>
-      )}
+    <View style={styles.content}>
+      <Text style={styles.cardTitle}>{title}</Text>
+      <Text style={styles.cardValue}>{value} <Text style={styles.cardUnit}>{unit}</Text></Text>
     </View>
   </View>
 );
@@ -42,59 +34,44 @@ const ConsumptionCard = ({ title, value, unit, subtext, iconName, color, style, 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.cardBackground,
-    borderRadius: 18,
-    padding: 20,
+    borderRadius: 12,
+    padding: 18,
     width: '48%',
-    marginBottom: 24,
-    shadowColor: '#0d274d',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.06,
-    shadowRadius: 12,
-    elevation: 3,
-  },
-  cardHeader: {
+    marginBottom: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  iconContainer: {
+    marginRight: 10,
+    marginLeft: 7,
+  },
+  content: {
+    flex: 1,
   },
   cardTitle: {
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: 10,
+    fontWeight: '100',
     color: colors.text,
-    marginLeft: 10,
-    fontFamily: 'Inter-SemiBold',
-  },
-  cardValue: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: colors.text,
-    marginBottom: 4,
     fontFamily: 'Inter-Regular',
   },
+  cardValue: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.text,
+    fontFamily: 'Inter-Regular-Bold',
+  },
   cardUnit: {
-    fontSize: 16,
+    fontSize: 10,
     fontWeight: '500',
     color: colors.subtext,
     fontFamily: 'Inter-Medium',
   },
   cardSubtext: {
-    fontSize: 14,
+    fontSize: 10,
     color: colors.subtext,
     fontFamily: 'Inter-Regular',
-  },
-  contentContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-  },
-  insightContainer: {
-    // Add styles if needed, e.g., alignment
-  },
-  insightText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#28a745', // accent-green
-    fontFamily: 'Inter-SemiBold',
   },
 });
 

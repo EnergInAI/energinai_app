@@ -91,7 +91,7 @@ const HistoricalBarChart = ({
                       }
                     ]}
                   >
-                    {`${month} ${day}`}
+                    {`${day}`}
                   </Text>
                 );
               })}
