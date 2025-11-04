@@ -68,11 +68,11 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   metricWrapper: {
-    width: '32%',
-    marginBottom: 16,
+    width: '34%', // Changed from 32% to 31% for 3 columns
+    marginBottom: 14,
   },
 });
 

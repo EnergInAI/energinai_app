@@ -5,7 +5,7 @@ import Header from '@/components/ui/Header';
 import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, useFonts } from '@expo-google-fonts/inter';
 import { Poppins_500Medium, Poppins_600SemiBold } from '@expo-google-fonts/poppins';
 import React, { useState } from 'react';
-import { Dimensions, SafeAreaView, ScrollView, StatusBar, StyleSheet, Switch, Text, View } from 'react-native';
+import { Dimensions, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import {
@@ -109,7 +109,7 @@ const HomeScreen = () => {
                   </View>
                 </View>
               </View>
-              <View style={styles.toggleContainer}>
+              {/* <View style={styles.toggleContainer}>
                 <Text style={styles.toggleLabel}>Without Solar</Text>
                 <Switch
                   trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -119,7 +119,7 @@ const HomeScreen = () => {
                   value={withSolar}
                 />
                 <Text style={styles.toggleLabel}>With Solar</Text>
-              </View>
+              </View> */}
               <View style={styles.grid}>
                 {withSolar ? (
                   <CurrentUsageCard style={styles.cardFullWidth} color={colors.consumption} iconName="bolt" />
@@ -137,7 +137,7 @@ const HomeScreen = () => {
                 )}
                 <ConsumptionCard
                   title="Today's Cost"
-                  value="$8.45"
+                  value="8.45"
                   unit=""
                   subtext="Today's energy cost"
                   iconName="rupee"
@@ -145,7 +145,7 @@ const HomeScreen = () => {
                 />
                 <ConsumptionCard
                   title="This Month"
-                  value="$187"
+                  value="187"
                   unit=""
                   subtext="Monthly energy cost"
                   iconName="rupee"
@@ -154,7 +154,7 @@ const HomeScreen = () => {
                 <ConsumptionCard
                   title="Daily Average"
                   value="2,650"
-                  unit="W"
+                  unit="kWh"
                   subtext="Average power usage"
                   iconName="bolt"
                   color={colors.consumption}
@@ -193,8 +193,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cardBackground,
     borderRadius: 16,
     padding: 18,
-    marginBottom: 30,
-    marginTop: 20,
+    marginBottom: 10,
+    marginTop: 0,
    
   },
   userName: {

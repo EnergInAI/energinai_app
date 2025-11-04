@@ -29,6 +29,7 @@ const MetricCard = ({ label, value, unit, icon, iconColor = '#F97316' }: MetricC
 
 const styles = StyleSheet.create({
   card: {
+    width: 120,
     backgroundColor: '#ffffff',
     borderRadius: 12,
     padding: 8,
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#777',
-    fontSize: 10,
+    fontSize: 12,
     marginTop: 2,
     fontFamily: 'Inter-Regular',
   },

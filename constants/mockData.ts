@@ -404,7 +404,7 @@ export const monthlyData: GroupedData<MonthlyData>[] = [
     data: [
       {
         date: 'November 2025',
-        loadConsumption: 1234.9,
+        loadConsumption: 599.9,
         solarProduction: 423.7,
         net: 811.2,
         cost: 63.74,

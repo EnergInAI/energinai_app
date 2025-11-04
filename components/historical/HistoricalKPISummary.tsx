@@ -55,8 +55,8 @@ const HistoricalKPISummary = ({ data, title }: HistoricalKPISummaryProps) => {
               <IconSymbol name={kpi.icon} size={20} color={kpi.color} />
             </View>
             <View style={styles.kpiContent}>
-              <Text style={styles.kpiLabel}>{kpi.label}</Text>
-              <Text style={[styles.kpiValue, { color: kpi.color }]}>
+              <Text style={[styles.kpiLabel, { color: kpi.color }]}>{kpi.label}</Text>
+              <Text style={[styles.kpiValue, { color: 'black' }]}>
                 {kpi.isCurrency ? `${kpi.unit}${kpi.value.toFixed(2)}` : `${kpi.value} ${kpi.unit}`}
               </Text>
             </View>
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   kpiValue: {
     fontFamily: 'Poppins-SemiBold',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '700',
   },
 });

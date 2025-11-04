@@ -9,6 +9,7 @@ const colors = {
   online: '#28a745',
   separator: '#e9ecef',
   accent: '#dc3545',
+  orange: '#f28c28',
 };
 
 interface CurrentUsageCardProps {
@@ -21,32 +22,28 @@ const CurrentUsageCard = ({ style, color, iconName }: CurrentUsageCardProps) => 
   return (
     <View style={[styles.card, style]}>
       <View style={styles.header}>
-        <View style={styles.titleContainer}>
-          <FontAwesome name={iconName} size={16} color={color} />
+        <FontAwesome name={iconName} size={28} color={color} style={styles.icon} />
+        <View style={styles.content}>
           <Text style={styles.title}>Net Usage</Text>
-        </View>
-        {/* <View style={styles.liveContainer}>
-          <View style={styles.liveDot} />
-          <Text style={styles.liveText}>Live</Text>
-        </View> */}
-      </View>
-      <View style={styles.usageContainer}>
-        <Text style={styles.usageValue}>4,368.295</Text>
-        <Text style={styles.usageUnit}>kW</Text>
-        <View style={styles.trendContainer}>
-          <FontAwesome name="long-arrow-up" size={16} color={colors.accent} />
-          <Text style={styles.trendText}>2.8%</Text>
+          <View style={styles.usageContainer}>
+            <Text style={styles.usageValue}>4,368.295</Text>
+            <Text style={styles.usageUnit}>kWh</Text>
+            <View style={styles.trendContainer}>
+              <FontAwesome name="long-arrow-up" size={14} color={colors.orange} />
+              <Text style={styles.trendText}>2.8%</Text>
+            </View>
+          </View>
         </View>
       </View>
       <View style={styles.separator} />
       <View style={styles.footer}>
         <View style={styles.footerItem}>
-          <Text style={styles.footerLabel}>Load</Text>
-          <Text style={styles.footerValue}>5052 kW</Text>
+          <Text style={[styles.footerLabel, styles.consumptionLabel]}>Consumption</Text>
+          <Text style={styles.footerValue}>5052 kWh</Text>
         </View>
         <View style={styles.footerItem}>
-          <Text style={styles.footerLabel}>Solar</Text>
-          <Text style={styles.footerValue}>1258 kW</Text>
+          <Text style={[styles.footerLabel, styles.generationLabel]}>Generation</Text>
+          <Text style={styles.footerValue}>1258 kWh</Text>
         </View>
       </View>
     </View>
@@ -61,24 +58,32 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderWidth: 1,
     borderColor: '#e2e8f0',
+    // Subtle shadow for modern look
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 1, // For Android
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 5,
   },
-  titleContainer: {
-    marginLeft: 22,
-    flexDirection: 'row',
-    alignItems: 'center',
+  icon: {
+    marginRight: 8,
+    marginTop: 5,
+    marginLeft: 14,
+  },
+  content: {
+    flex: 1,
   },
   title: {
     fontSize: 20,
     fontWeight: '100',
-    color: colors.text,
-    marginLeft: 8,
+    color: '#f28c28',
     fontFamily: 'Poppins-SemiBold',
+    marginBottom: 5,
   },
   liveContainer: {
     flexDirection: 'row',
@@ -110,7 +115,6 @@ const styles = StyleSheet.create({
     fontSize: 21,
     fontWeight: 'bold',
     color: colors.text,
-    marginLeft: 37,
     fontFamily: 'Inter-Regular',
   },
   usageUnit: {
@@ -128,7 +132,7 @@ const styles = StyleSheet.create({
   trendText: {
     fontSize: 20,
     fontWeight: '600',
-    color: colors.accent,
+    color: colors.orange,
     marginLeft: 5,
     fontFamily: 'Inter-SemiBold',
   },
@@ -155,6 +159,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.text,
     fontFamily: 'Inter-SemiBold',
+  },
+  consumptionLabel: {
+    color: '#f28c28',
+  },
+  generationLabel: {
+    color: '#28a745',
   },
 });
 

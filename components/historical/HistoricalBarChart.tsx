@@ -227,7 +227,7 @@ const HistoricalBarChart = ({
                     y={40 + (availableHeight - barHeight)}
                     width={barWidth}
                     height={barHeight}
-                    fill={isSelected ? '#3B82F6' : '#ADD8E6'}
+                    fill={isSelected ? '#3B82F6' : '#0d274d'}
                     rx={8}
                     ry={8}
                   />
@@ -341,7 +341,7 @@ const HistoricalBarChart = ({
                     y={40 + (availableHeight - barHeight)}
                     width={barWidth}
                     height={barHeight}
-                    fill={isSelected ? '#3B82F6' : '#ADD8E6'}
+                    fill={isSelected ? '#0d274d' : '#ADD8E6'}
                     rx={8}
                     ry={8}
                   />
@@ -470,7 +470,7 @@ const styles = StyleSheet.create({
   },
   tooltip: {
     position: 'absolute',
-    backgroundColor: '#3B82F6',
+    backgroundColor: '#0d274d',
     borderRadius: 16,
     paddingVertical: 6,
     paddingHorizontal: 12,
