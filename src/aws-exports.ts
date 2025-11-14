@@ -8,6 +8,22 @@ const awsConfig = {
       allowGuestAccess: true, // ← CRITICAL: Enable guest/unauthenticated access
     },
   },
+  deviceId: 'ENSN001',
 };
 
-export default awsConfig;
+export const API_CONFIG = {
+  BASE_URL: 'https://hqq0fr63d6.execute-api.ap-south-1.amazonaws.com/prodv1',
+  ENDPOINTS: {
+    HOME: '/home',
+    LIVE: '/live',
+    HISTORICAL_DAILY: '/historical/daily',
+    HISTORICAL_MONTHLY: '/historical/monthly'
+  },
+  REFRESH_INTERVALS: {
+    LIVE: 30,
+    HOME: 3600,
+    HISTORICAL: 30000
+  }
+};
+
+export default awsConfig;

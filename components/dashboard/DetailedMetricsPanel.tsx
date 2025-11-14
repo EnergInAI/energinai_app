@@ -15,7 +15,7 @@ const DetailedMetricsPanel = ({ loadMetrics, genMetrics }: DetailedMetricsPanelP
         <MetricsList title="Consumption" metrics={loadMetrics} />
       </Pressable>
       <Pressable style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}>
-        <MetricsList title="Generation" metrics={genMetrics} />
+        <MetricsList title="Solar Generation" metrics={genMetrics} />
       </Pressable>
     </View>
   );

@@ -1,10 +1,11 @@
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { dailyData, monthlyData } from '@/constants/mockData';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { DailyData, GroupedData, MonthlyData } from '../../constants/mockData';
+import awsConfig, { API_CONFIG } from '../../src/aws-exports';
 import HistoricalBarChart from './HistoricalBarChart';
 import HistoricalKPISummary from './HistoricalKPISummary';
 
@@ -14,9 +15,87 @@ const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 const HistoricalDataView = () => {
   const [activeView, setActiveView] = useState<ViewType>('monthly');
-  const [selectedMonthIndex, setSelectedMonthIndex] = useState<number | null>(10); // November 2025 (current month)
+  const [selectedMonthIndex, setSelectedMonthIndex] = useState<number | null>(0); // Start with 0
   const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(null);
   const [chartMode, setChartMode] = useState<'months' | 'days'>('months');
+  const [monthlyData, setMonthlyData] = useState<GroupedData<MonthlyData>[]>(Array(12).fill(null).map(() => ({ month: '', data: [{ loadConsumption: 0, solarProduction: 0, net: 0, cost: 0, date: '' }] })));
+  const [dailyData, setDailyData] = useState<GroupedData<DailyData>[]>(Array(12).fill(null).map(() => ({ month: '', data: [] })));
+
+  useEffect(() => {
+    const fetchMonthlyData = async () => {
+      const months = [];
+      for (let i = 0; i < 12; i++) {
+        const date = new Date();
+        date.setMonth(date.getMonth() - i);
+        const month = date.toISOString().slice(0, 7); // YYYY-MM
+        try {
+          const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.HISTORICAL_MONTHLY}?deviceId=${awsConfig.deviceId}&month=${month}`);
+          const apiData = await response.json();
+          if (apiData.status === 'ok' && apiData.data && apiData.data.data) {
+            const monthData: MonthlyData = {
+              date: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' }),
+              loadConsumption: apiData.data.data.load || 0,
+              solarProduction: apiData.data.data.solar || 0,
+              net: apiData.data.data.net || 0,
+              cost: apiData.data.data.cost || 0,
+            };
+            months.unshift({
+              month: date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' }),
+              data: [monthData]
+            });
+          }
+        } catch (error) {
+          console.error('Error fetching monthly data:', error);
+        }
+      }
+      setMonthlyData(months);
+    };
+
+    fetchMonthlyData();
+  }, []);
+
+  useEffect(() => {
+    if (selectedMonthIndex !== null && monthlyData[selectedMonthIndex]) {
+      const fetchDailyData = async () => {
+        const monthStr = monthlyData[selectedMonthIndex].month;
+        // Parse month string to get year and month
+        const date = new Date(monthStr + ' 1');
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const daysInMonth = new Date(year, month, 0).getDate();
+
+        const days = [];
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dayStr = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+          try {
+            const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.HISTORICAL_DAILY}?deviceId=${awsConfig.deviceId}&date=${dayStr}`);
+            const apiData = await response.json();
+            if (apiData.status === 'ok' && apiData.data && apiData.data.data) {
+              const dayData: DailyData = {
+                date: new Date(dayStr).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }),
+                loadConsumption: apiData.data.data.load || 0,
+                solarProduction: apiData.data.data.solar || 0,
+                net: apiData.data.data.net || 0,
+                cost: apiData.data.data.cost || 0,
+              };
+              days.push(dayData);
+            }
+          } catch (error) {
+            console.error('Error fetching daily data:', error);
+          }
+        }
+
+        const updatedDailyData = [...dailyData];
+        updatedDailyData[selectedMonthIndex] = {
+          month: monthStr,
+          data: days
+        };
+        setDailyData(updatedDailyData);
+      };
+
+      fetchDailyData();
+    }
+  }, [selectedMonthIndex, monthlyData]);
 
   const handleMonthSelect = (index: number) => {
     if (selectedMonthIndex === index && chartMode === 'days') {
@@ -46,7 +125,7 @@ const HistoricalDataView = () => {
 
   const handleViewChange = (view: ViewType) => {
     setActiveView(view);
-    setSelectedMonthIndex(null);
+    setSelectedMonthIndex(0);
     setSelectedDayIndex(null);
     setChartMode('months');
   };
@@ -83,31 +162,39 @@ const HistoricalDataView = () => {
 
   // Get the correct data for KPI summary
   const getKPIData = () => {
-    if (activeView === 'daily' && selectedDayIndex !== null) {
+    if (activeView === 'daily' && selectedDayIndex !== null && dailyData.length > 0) {
       // For daily view, get data from most recent month
       const recentMonthIndex = dailyData.length - 1;
-      const recentDays = dailyData[recentMonthIndex].data.slice(-10);
-      return {
-        data: recentDays[selectedDayIndex],
-        title: `${recentDays[selectedDayIndex].date} Summary`
-      };
+      if (dailyData[recentMonthIndex] && dailyData[recentMonthIndex].data) {
+        const recentDays = dailyData[recentMonthIndex].data.slice(-10);
+        if (recentDays[selectedDayIndex]) {
+          return {
+            data: recentDays[selectedDayIndex],
+            title: `${recentDays[selectedDayIndex].date} Summary`
+          };
+        }
+      }
     }
-    
+
     if (activeView === 'monthly' && selectedMonthIndex !== null) {
       if (chartMode === 'days' && selectedDayIndex !== null) {
         // Show day summary when in day view
-        return {
-          data: dailyData[selectedMonthIndex].data[selectedDayIndex],
-          title: `${dailyData[selectedMonthIndex].data[selectedDayIndex].date} Summary`
-        };
+        if (dailyData[selectedMonthIndex] && dailyData[selectedMonthIndex].data && dailyData[selectedMonthIndex].data[selectedDayIndex]) {
+          return {
+            data: dailyData[selectedMonthIndex].data[selectedDayIndex],
+            title: `${dailyData[selectedMonthIndex].data[selectedDayIndex].date} Summary`
+          };
+        }
       }
       // Show month summary when month is selected
-      return {
-        data: monthlyData[selectedMonthIndex].data[0],
-        title: `${monthlyData[selectedMonthIndex].month} Summary`
-      };
+      if (monthlyData[selectedMonthIndex] && monthlyData[selectedMonthIndex].data && monthlyData[selectedMonthIndex].data[0]) {
+        return {
+          data: monthlyData[selectedMonthIndex].data[0],
+          title: `${monthlyData[selectedMonthIndex].month} Summary`
+        };
+      }
     }
-    
+
     return null;
   };
 

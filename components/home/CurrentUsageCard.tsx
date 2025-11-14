@@ -1,4 +1,4 @@
-import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -15,35 +15,40 @@ const colors = {
 interface CurrentUsageCardProps {
   style?: object;
   color: string;
-  iconName: React.ComponentProps<typeof FontAwesome>['name'];
+  iconName: React.ComponentProps<typeof Feather>['name'];
+  net: number;
+  importToday: number;
+  exportToday: number;
 }
 
-const CurrentUsageCard = ({ style, color, iconName }: CurrentUsageCardProps) => {
+const CurrentUsageCard = ({ style, color, iconName, net, importToday, exportToday }: CurrentUsageCardProps) => {
+  const dynamicColor = exportToday > importToday ? '#28a745' : '#f28c28';
+  const titleText = exportToday > importToday ? 'Net Export' : 'Net Import';
   return (
     <View style={[styles.card, style]}>
       <View style={styles.header}>
-        <FontAwesome name={iconName} size={28} color={color} style={styles.icon} />
+        <Feather name={iconName} size={28} color={dynamicColor} style={styles.icon} />
         <View style={styles.content}>
-          <Text style={styles.title}>Net Usage</Text>
+          <Text style={[styles.title, { color: dynamicColor }]}>{titleText}</Text>
           <View style={styles.usageContainer}>
-            <Text style={styles.usageValue}>4,368.295</Text>
+            <Text style={styles.usageValue}>{Math.abs(net).toFixed(3)}</Text>
             <Text style={styles.usageUnit}>kWh</Text>
-            <View style={styles.trendContainer}>
-              <FontAwesome name="long-arrow-up" size={14} color={colors.orange} />
+            {/* <View style={styles.trendContainer}>
+              <Feather name="arrow-up" size={14} color={colors.orange} />
               <Text style={styles.trendText}>2.8%</Text>
-            </View>
+            </View> */}
           </View>
         </View>
       </View>
       <View style={styles.separator} />
       <View style={styles.footer}>
         <View style={styles.footerItem}>
-          <Text style={[styles.footerLabel, styles.consumptionLabel]}>Consumption</Text>
-          <Text style={styles.footerValue}>5052 kWh</Text>
+          <Text style={[styles.footerLabel, styles.consumptionLabel]}>Import today</Text>
+          <Text style={styles.footerValue}>{importToday} kWh</Text>
         </View>
         <View style={styles.footerItem}>
-          <Text style={[styles.footerLabel, styles.generationLabel]}>Generation</Text>
-          <Text style={styles.footerValue}>1258 kWh</Text>
+          <Text style={[styles.footerLabel, styles.generationLabel]}>Export today</Text>
+          <Text style={styles.footerValue}>{exportToday} kWh</Text>
         </View>
       </View>
     </View>
@@ -53,17 +58,16 @@ const CurrentUsageCard = ({ style, color, iconName }: CurrentUsageCardProps) => 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.cardBackground,
-    borderRadius: 12,
-    padding: 18,
-    marginBottom: 15,
+    borderRadius: 14,
+    padding: 20,
+    marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    // Subtle shadow for modern look
+    borderColor: 'rgba(13, 39, 77, 0.08)',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 1, // For Android
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 3,
   },
   header: {
     flexDirection: 'row',
@@ -73,16 +77,16 @@ const styles = StyleSheet.create({
   icon: {
     marginRight: 8,
     marginTop: 5,
-    marginLeft: 14,
+    marginLeft: 0,
   },
   content: {
     flex: 1,
   },
   title: {
     fontSize: 20,
-    fontWeight: '100',
+    fontWeight: 'bold',
     color: '#f28c28',
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: 'Poppins-Bold',
     marginBottom: 5,
   },
   liveContainer: {
@@ -112,7 +116,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   usageValue: {
-    fontSize: 21,
+    fontSize: 26,
     fontWeight: 'bold',
     color: colors.text,
     fontFamily: 'Inter-Regular',
@@ -146,16 +150,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   footerItem: {
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#fafafa',
+    padding: 18,
+    borderRadius: 12,
   },
   footerLabel: {
     fontSize: 14,
+    fontWeight: 'bold',
     color: colors.subtext,
     marginBottom: 4,
-    fontFamily: 'Inter-Regular',
+    fontFamily: 'Poppins-Bold',
   },
   footerValue: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
     color: colors.text,
     fontFamily: 'Inter-SemiBold',

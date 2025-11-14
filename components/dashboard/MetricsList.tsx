@@ -13,22 +13,23 @@ type MetricIcon = keyof typeof MaterialCommunityIcons.glyphMap;
 
 const MetricsList = ({ title, metrics }: MetricsListProps) => {
   const isLoad = title === 'Consumption';
-  const iconColor = isLoad ? '#F97316' : '#22C55E';
+  const iconColor = isLoad ? '#f28c28' : '#28a745';
+  const titleColor = iconColor;
 
-  const metricsData: { label: string; value: string | number; unit: string; icon: MetricIcon }[] = [
-    { label: 'Voltage', value: metrics.voltage, unit: 'V', icon: 'sine-wave' },
-    { label: 'Current', value: metrics.current, unit: 'A', icon: 'current-ac' },
-    { label: 'Power', value: metrics.power, unit: 'kW', icon: 'flash' },
-    { label: 'Energy', value: metrics.kwh, unit: 'kWh', icon: 'battery-charging' },
-    { label: 'Power Factor', value: metrics.pf, unit: '', icon: 'gauge' },
-    { label: 'Frequency', value: metrics.frequency, unit: 'Hz', icon: 'waveform' },
+  const metricsData: { label: string; value: string | number; unit: string }[] = [
+    { label: 'Voltage (V)', value: metrics.voltage, unit: 'V' },
+    { label: 'Units (kWh)', value: metrics.kwh, unit: 'kWh' },
+    { label: 'Current (I)', value: metrics.current, unit: 'A' },
+    { label: 'Power (P)', value: metrics.power, unit: 'kW' },
+    { label: 'Power Factor (PF)', value: metrics.pf, unit: '' },
+    { label: 'Frequency (F)', value: metrics.frequency, unit: 'Hz' },
   ];
 
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <View style={[styles.verticalLine, { backgroundColor: iconColor }]} />
-        <Text style={styles.title}>{title}</Text>
+        <Text style={[styles.title, { color: titleColor }]}>{title}</Text>
       </View>
       <View style={styles.grid}>
         {metricsData.map(metric => (
@@ -37,8 +38,6 @@ const MetricsList = ({ title, metrics }: MetricsListProps) => {
               label={metric.label}
               value={metric.value}
               unit={metric.unit}
-              icon={metric.icon}
-              iconColor={iconColor}
             />
           </View>
         ))}
@@ -62,17 +61,17 @@ const styles = StyleSheet.create({
   title: {
     color: '#222',
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: '800',
     fontFamily: 'Poppins-SemiBold',
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
   },
   metricWrapper: {
-    width: '34%', // Changed from 32% to 31% for 3 columns
-    marginBottom: 14,
+    width: '48%',
+    marginBottom: 12,
   },
 });
 

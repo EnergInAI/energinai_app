@@ -435,9 +435,10 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   title: {
+    textAlign: 'center',
     fontFamily: 'Poppins-SemiBold',
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '800',
     color: '#222',
     flex: 1,
   },

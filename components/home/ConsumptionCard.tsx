@@ -1,4 +1,4 @@
-import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -7,7 +7,7 @@ type ConsumptionCardProps = {
   value: string;
   unit: string;
   subtext: string;
-  iconName: React.ComponentProps<typeof FontAwesome>['name'];
+  iconName: React.ComponentProps<typeof Feather>['name'];
   color: string;
   style?: object;
   insightText?: string;
@@ -22,11 +22,11 @@ const colors = {
 const ConsumptionCard = ({ title, value, unit, subtext, iconName, color, style }: ConsumptionCardProps) => (
   <View style={[styles.card, style]}>
     <View style={styles.iconContainer}>
-      <FontAwesome name={iconName} size={24} color={color} />
+      <Feather name={iconName} size={28} color={color} />
     </View>
     <View style={styles.content}>
       <Text style={styles.cardTitle}>{title}</Text>
-      <Text style={styles.cardValue}>{value} <Text style={styles.cardUnit}>{unit}</Text></Text>
+      <Text style={styles.cardValue}>{value}{unit}</Text>
     </View>
   </View>
 );
@@ -35,38 +35,37 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.cardBackground,
     borderRadius: 12,
-    padding: 18,
+    padding: 14,
     width: '48%',
-    marginBottom: 15,
+    marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#e2e8f0',
-    // Subtle shadow for modern look
+    borderColor: 'rgba(13, 39, 77, 0.08)',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 1, // For Android
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 3,
   },
   iconContainer: {
     marginRight: 10,
-    marginLeft: 7,
   },
   content: {
     flex: 1,
   },
   cardTitle: {
-    fontSize: 10,
-    fontWeight: '100',
-    color: colors.text,
-    fontFamily: 'Inter-Regular',
+    fontSize: 12,
+    color: colors.subtext,
+    fontFamily: 'Inter-Medium',
+    marginBottom: 3,
+    lineHeight: 14,
   },
   cardValue: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: '700',
     color: colors.text,
-    fontFamily: 'Inter-Regular-Bold',
+    fontFamily: 'Inter-Bold',
   },
   cardUnit: {
     fontSize: 10,
