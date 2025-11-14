@@ -7,7 +7,8 @@ type ConsumptionCardProps = {
   value: string;
   unit: string;
   subtext: string;
-  iconName: React.ComponentProps<typeof Feather>['name'];
+  iconName?: React.ComponentProps<typeof Feather>['name'];
+  symbol?: string;
   color: string;
   style?: object;
   insightText?: string;
@@ -19,10 +20,14 @@ const colors = {
   cardBackground: '#ffffff',
 };
 
-const ConsumptionCard = ({ title, value, unit, subtext, iconName, color, style }: ConsumptionCardProps) => (
+const ConsumptionCard = ({ title, value, unit, subtext, iconName, symbol, color, style }: ConsumptionCardProps) => (
   <View style={[styles.card, style]}>
     <View style={styles.iconContainer}>
-      <Feather name={iconName} size={28} color={color} />
+      {iconName ? (
+        <Feather name={iconName} size={28} color={color} />
+      ) : (
+        symbol && <Text style={[styles.symbol, { color }]}>{symbol}</Text>
+      )}
     </View>
     <View style={styles.content}>
       <Text style={styles.cardTitle}>{title}</Text>
@@ -77,6 +82,10 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: colors.subtext,
     fontFamily: 'Inter-Regular',
+  },
+  symbol: {
+    fontSize: 26,
+    fontWeight: 'bold',
   },
 });
 

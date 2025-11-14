@@ -145,7 +145,7 @@ const HomeScreen = () => {
                 <ConsumptionCard
                   title="Load Consumed"
                   value={cumulative.consumption.toFixed(1)}
-                  unit="kWh"
+                  unit=" kWh"
                   subtext="Total energy consumed"
                   iconName="zap"
                   color={colors.consumption}
@@ -153,7 +153,7 @@ const HomeScreen = () => {
                 <ConsumptionCard
                   title="Solar Generated"
                   value={cumulative.solar.toFixed(1)}
-                  unit="kWh"
+                  unit=" kWh"
                   subtext="Solar energy generated"
                   iconName="zap"
                   color={colors.co2}
@@ -163,14 +163,14 @@ const HomeScreen = () => {
                   value={cumulative.cost.toFixed(2)}
                   unit=""
                   subtext="Today's energy cost"
-                  iconName="dollar-sign"
+                  symbol="₹"
                   color={colors.cost}
                 />
 
                 <ConsumptionCard
                   title="CO₂ Saved"
                   value={cumulative.co2_saved.toFixed(1)}
-                  unit="kg"
+                  unit=" kg"
                   subtext="Equivalent to 2 trees"
                   iconName="cloud"
                   color={colors.co2}
